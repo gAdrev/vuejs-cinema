@@ -1,7 +1,7 @@
 <template>
 <div id="movie-list">
     <div class="movie" v-for="movie in filteredMovies">
-        {{ movie.title }}
+        {{ movie.movie.Title }}
     </div>
 </div>
 </template>
@@ -9,17 +9,7 @@
 <script>
     import genres from "../util/genres";
     export default {
-        props: ["genre", "time"],
-        data: function() {
-            return {
-                movies: [
-                    { title: "Pulp Fiction", genre: genres.CRIME },
-                    { title: "Home Alone", genre: genres.COMEDY },
-                    { title: "The Big Lebowski", genre: genres.COMEDY },
-                    { title: "Final Fantasy", genre: genres.FANTASY }
-                ]
-            };
-        },
+        props: ["genre", "time", "movies"],
         methods: {
             moviePassesGenreFilter: function(movie) {
                 return this.genre.length === 0 ||
