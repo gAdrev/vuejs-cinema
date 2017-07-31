@@ -11,8 +11,13 @@
         props: ["genre", "time", "movies"],
         methods: {
             moviePassesGenreFilter: function(movie) {
-                return this.genre.length === 0 ||
-                        this.genre.indexOf(movie.genre) > -1;
+                var movieGenres = movie.movie.Genre.split(", "),
+                    i;
+                for(i=0; i<this.genre.length; i++) {
+                    if (movieGenres.indexOf(this.genre[i]) === -1)
+                        return false;
+                }
+                return true;
             }
         },
         computed: {
