@@ -33,7 +33,8 @@ new Vue({
         movies: [],
         genre: [],
         time: [],
-        moment: moment
+        moment: moment,
+        day: moment()
     },
     components: {
         "movie-list": MovieList,
@@ -43,5 +44,6 @@ new Vue({
         this.$http.get("/api").then(response => {
             this.movies = response.data;
         });
+        console.log("Day is: " + this.day);
     }
 });
