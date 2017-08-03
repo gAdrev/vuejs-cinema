@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import "./style.scss";
 
-import MovieList from "./components/MovieList.vue";
-import MovieFilter from "./components/MovieFilter.vue";
+import Overview from "./components/Overview.vue";
 
 import VueResource from "vue-resource";
 Vue.use(VueResource);
@@ -15,35 +14,33 @@ Object.defineProperty(Vue.prototype, "$moment", {
     }
 });
 
+import { checkFilter } from "./util/bus";
+
+const bus = new Vue();
+Object.defineProperty(Vue.prototype, "$bus", {
+    get: function get() {
+        return this.$root.bus;
+    }
+})
+
 new Vue({
     el: '#app',
-    methods: {
-        checkFilter: function(category, title, checked) {
-            if (checked) {
-                this[category].push(title);
-            } else {
-                let index = this[category].indexOf(title);
-                if (index > -1 ) {
-                    this[category].splice(index, 1);
-                }
-            }
-        }
-    },
     data: {
         movies: [],
         genre: [],
         time: [],
         moment: moment,
-        day: moment()
+        day: moment(),
+        bus: bus
     },
     components: {
-        "movie-list": MovieList,
-        "movie-filter": MovieFilter
+       Overview
     },
     created: function onCreate() {
         this.$http.get("/api").then(response => {
             this.movies = response.data;
         });
+        this.$bus.$on("check-filter", checkFilter.bind(this));
         console.log("Day is: " + this.day);
     }
 });
