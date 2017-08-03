@@ -8,7 +8,7 @@
                     v-bind:time="time" ></movie-item>
     </div>
     <div v-else-if="movies.length" class="no-results">
-        No results.
+        {{ noResults }}
     </div>
     <div v-else>
         Loading...
@@ -20,6 +20,7 @@
     import genres from "../util/genres";
     import times from "../util/times";
     import MovieItem from "./MovieItem.vue";
+
     export default {
         props: ["genre", "time", "movies", "day"],
         methods: {
@@ -52,6 +53,12 @@
                 return this.movies
                     .filter(this.moviePassesGenreFilter)
                     .filter(movie => movie.sessions.find(this.sessionPassesTimeFilter));
+            },
+            noResults: function() {
+                let times = this.time.join(", ");
+                let genres = this.genre.join(", ");
+                let sep = times.length && genres.length ? ", " : "";
+                return `No results for ${times}${sep}${genres}`;
             }
         },
         components: {
