@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import "./style.scss";
 
-import Overview from "./components/Overview.vue";
-
 import VueResource from "vue-resource";
 Vue.use(VueResource);
 
@@ -23,6 +21,14 @@ Object.defineProperty(Vue.prototype, "$bus", {
     }
 })
 
+import VueRouter from 'vue-router';
+import routes from './util/routes';
+
+Vue.use(VueRouter);
+const router = new VueRouter({
+    routes: routes
+});
+
 new Vue({
     el: '#app',
     data: {
@@ -33,14 +39,12 @@ new Vue({
         day: moment(),
         bus: bus
     },
-    components: {
-       Overview
-    },
     created: function onCreate() {
         this.$http.get("/api").then(response => {
             this.movies = response.data;
         });
         this.$bus.$on("check-filter", checkFilter.bind(this));
         console.log("Day is: " + this.day);
-    }
+    },
+    router: router
 });
