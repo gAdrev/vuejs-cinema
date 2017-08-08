@@ -1,17 +1,17 @@
 <template>
   <div id="day-select">
       <ul class="days">
-          <li v-bind:class="{day: true, active: isActive(day)}" v-for="day in days" v-on:click="selected = day">
+          <li v-bind:class="{day: true, active: isActive(day)}" v-for="day in days" v-on:click="selectDay(day)">
           {{ formatDay(day) }}
           </li>
       </ul>
   </div>
 </template>
-<<script>
+<script>
 export default {
+  props: ["selected"],
   data() {
       return {
-          selected: this.$moment(),
           days: [0, 1, 2, 3, 4, 5, 6].map(num => this.$moment().add(num, "days"))
       };
   },
@@ -24,6 +24,9 @@ export default {
       },
       isActive(day) {
           return day.isSame(this.selected, "day");
+      },
+      selectDay(day) {
+          this.$bus.$emit("set-day", day);
       }
   }
 }
