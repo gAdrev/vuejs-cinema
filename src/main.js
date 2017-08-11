@@ -48,3 +48,9 @@ new Vue({
     },
     router: router
 });
+
+Vue.directive("tooltip", {
+    bind(el, bindings) {
+        console.log("tooltip directive bound, element: %o", el);
+    }
+});
