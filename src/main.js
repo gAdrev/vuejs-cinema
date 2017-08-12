@@ -49,8 +49,43 @@ new Vue({
     router: router
 });
 
+import { addClass, removeClass } from './util/helpers';
+
+let mouseOverHandler = function(event) {
+    let target = event.target;
+    let span = target.parentNode.getElementsByTagName("SPAN")[0];
+    addClass(span, "tooltip-show");
+};
+
+let mouseOutHandler = function(event) {
+    let target = event.target;
+    let span = target.parentNode.getElementsByTagName("SPAN")[0];
+    removeClass(span, "tooltip-show");
+};
+
 Vue.directive("tooltip", {
     bind(el, bindings) {
-        console.log("tooltip directive bound, element: %o", el);
+        let span = document.createElement("SPAN");
+        let text = document.createTextNode("Seats available: 200");
+        span.appendChild(text);
+        addClass(span, "tooltip");
+
+        el.appendChild(span);
+
+        let div = el.getElementsByTagName("div")[0];
+        div.addEventListener("mouseover", mouseOverHandler);
+        div.addEventListener("mouseout", mouseOutHandler);
+        div.addEventListener("touchstart", mouseOverHandler);
+        div.addEventListener("touchend", mouseOutHandler);
+    },
+    unbind(el) {
+        let div = el.getElementsByTagName("div")[0];
+        div.removeEventListener("mouseover", mouseOverHandler);
+        div.removeEventListener("mouseout", mouseOutHandler);
+        div.removeEventListener("touchstart", mouseOverHandler);
+        div.removeEventListener("touchend", mouseOutHandler);
+
+
+
     }
 });
