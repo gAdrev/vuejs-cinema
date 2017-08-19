@@ -44,7 +44,6 @@ export default {
         }
     },
     created: function created() {
-        console.log(this.$route.params.id);
     },
     components: {
         MovieItem

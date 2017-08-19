@@ -33,7 +33,6 @@ export default {
           this.$bus.$emit("set-day", day);
       },
       changeDay(change) {
-          console.log("changeDay this.selected=%o", this.selected);
           let newDay = this.$moment(this.selected).add(change, "days");
           if (this.days.find(day => newDay.isSame(day, "day")))
           {

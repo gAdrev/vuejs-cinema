@@ -78,8 +78,6 @@
             MovieItem
         },
         created: function() {
-            console.log("moment");
-            console.log(this.$moment);
         }
     }
 </script>

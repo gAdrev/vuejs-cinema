@@ -24,6 +24,9 @@ Object.defineProperty(Vue.prototype, "$bus", {
 import VueRouter from 'vue-router';
 import routes from './util/routes';
 
+import Tooltip from "./util/tooltip";
+Vue.use(Tooltip);
+
 Vue.use(VueRouter);
 const router = new VueRouter({
     routes: routes
@@ -66,7 +69,7 @@ let mouseOutHandler = function(event) {
 Vue.directive("tooltip", {
     bind(el, bindings) {
         let span = document.createElement("SPAN");
-        let text = document.createTextNode("Seats available: 200");
+        let text = document.createTextNode(`Seats available: ${bindings.value.seats}`);
         span.appendChild(text);
         addClass(span, "tooltip");
 
@@ -84,8 +87,5 @@ Vue.directive("tooltip", {
         div.removeEventListener("mouseout", mouseOutHandler);
         div.removeEventListener("touchstart", mouseOverHandler);
         div.removeEventListener("touchend", mouseOutHandler);
-
-
-
     }
 });
