@@ -1,0 +1,8 @@
+https://stackoverflow.com/questions/42375468/uglify-syntaxerror-unexpected-token-punc
+
+- Replace new webpack.optimize.UglifyJsPlugin()
+  with    new UglifyJSPlugin()
+
+- Versions: uglifyjs-js git://github.com/mishoo/UglifyJS2#harmony-v2.8.22
+            uglify-webpack-plugin 0.4.4
+
